@@ -1,5 +1,9 @@
+/*
+This function should manage multiple forms and update it only if the form has changed.
+*/
+   
 
-    $.fn.multiAjaxFormIfItHasChanged = function (arrayToBeProcess, callbackSuccess, callbackFailures) {
+$.fn.multiAjaxFormIfItHasChanged = function (arrayToBeProcess, callbackSuccess, callbackFailures) {
 
         //arrayToBeProcess ={ id:"",ajax:$.ajax()}
         //init if it is first time
