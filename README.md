@@ -3,7 +3,9 @@ Is a jquery plugin to handle multi-ajax request for forms ONLY if they have chan
 
 It doesn't listen to "input" or "change" event but compare 2 states of form. So if an input had "Myvalue" as a value, then user change it to "not my value" and change it back to "Myvalue", no ajax request will be processed.
 
-###Example
+
+
+###Example :
 
 ```
 $("HTMLElement to attach 'click event'").multiAjaxFormIfItHasChanged(
@@ -16,8 +18,13 @@ $("HTMLElement to attach 'click event'").multiAjaxFormIfItHasChanged(
         CallBackOnFailure)
 
 ```
-###The object
-
+###The objects :
+```
+$("CSS SELCTOR").multiAjaxFormIfItHasChanged(
+      [Object as Defined Below],
+        callback function,
+        callback function)
+```
 The object must have 2 properties:
 1/ id
 2/ Ajax function (or any promise).
@@ -27,7 +34,7 @@ The object must have 2 properties:
   ajax:function(){my ajax request}
 }
 ```
-###Add new form after initialisation.
+###Add new form after initialisation :
 ```
 $("HTML Element to attach 'click event' ").multiAjaxFormIfItHasChanged(
       [{
