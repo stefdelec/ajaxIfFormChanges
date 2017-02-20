@@ -1,56 +1,79 @@
 
 <!doctype html>
-
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-
-  <title>The HTML5 Herald</title>
-  <meta name="description" content="The HTML5 Herald">
-  <meta name="author" content="SitePoint">
-<script
-  src="hattps://code.jquery.com/jquery-3.1.1.min.js"
-  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>
-  <script src="index.js"></script>
-
-  <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-  <![endif]-->
+    <meta charset="utf-8">
+    <title>The HTML5 Herald</title>
+    <meta name="description" content="The HTML5 Herald">
+    <meta name="author" content="SitePoint">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
 </head>
+<body style="padding:55px">
+    <div class="row">
+        <div class="col-lg-12">
+            <p>
+                If you hit save and don't change, no ajax request will be processed. If you change form1, only form1 will be process. If you change both form1 and form2, both will be processed.
+              Check in your debug-console>network.
+            </p>
+        </div>
+    </div>
+    <form id="GeneralTerms" class="row jumbotron">
+ 
+          <h3>Form 1</h3>
 
-<body>
-<form id="GeneralTerms">
-<input id="myinput" value="If you change me and hit 'save', I ll send an ajax(General Terms) request otherwise, nothing will happen." >
+        <div class="col-lg-11">
+            <input class="form-control" id="myinput" value="If you change me and hit 'save', I ll send an ajax(General Terms) request otherwise, nothing will happen.">
+        </div>
+    </form>
+    <br />
 
-</form>
-<form id="Otherform">
-This form will be part of the process only 2 seconds after document ready.
-<input id="myinput" value="If you change me and hit 'save', I ll send an ajax(Otherform) request otherwise, nothing will happen." >
+    <form id="Otherform" class="row jumbotron">
+    
+            <h3>Form 2</h3>
 
-</form>
-<div id="save">save</div>
-</body>
-<script>
-$(document).ready(function(){
+        <div class="col-lg-11">
+
+            This form will be part of the process only 2 seconds after document ready.
+            <input class="form-control" id="myinput1" value="If you change me and hit 'save', I ll send an ajax(Otherform) request otherwise, nothing will happen.">
+
+            <input class="form-control" id="myinput2" value="If you change me and hit 'save', I ll send an ajax(Otherform) request otherwise, nothing will happen.">
+        </div>
+
+    </form>
+    <br />
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="save" class="btn btn-danger btn-block">save</div>
+
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
 
 
-function updateGeneralTerms() {
-            return {
-                id: "GeneralTerms",
-                ajax: function () {
-                    return $.ajax({
-                        type: 'POST',
-                        url: "https://jsonplaceholder.typicode.com/posts",
-                        data: $("form#GeneralTerms").serialize(),
-                        dataType: "json"
-                    })
+            function updateGeneralTerms() {
+                return {
+                    id: "GeneralTerms",
+                    ajax: function () {
+                        return $.ajax({
+                            type: 'POST',
+                            url: "https://jsonplaceholder.typicode.com/posts",
+                            data: $("form#GeneralTerms").serialize(),
+                            dataType: "json"
+                        })
+                    }
+
                 }
-
             }
-        }
-function OtherForm() {
-            return {
+            var OtherForm = {
                 id: "Otherform",
                 ajax: function () {
                     return $.ajax({
@@ -60,14 +83,20 @@ function OtherForm() {
                         dataType: "json"
                     })
                 }
-
             }
-        }
-  $("#save").multiAjaxFormIfItHasChanged([new updateGeneralTerms()])
-  
-  setTimeout(function(){
-   $("#save").multiAjaxFormIfItHasChanged([new OtherForm()])
-  },2000)
-})
-</script>
+
+            var callbackSuccess = function () {
+                console.log("yes, I am a success")
+            }
+            var callbackFailure = function () {
+                console.log("No, I am a failure")
+            }
+            $("#save").multiAjaxFormIfItHasChanged([new updateGeneralTerms()], callbackSuccess, callbackFailure)
+
+            setTimeout(function () {
+                $("#save").multiAjaxFormIfItHasChanged([OtherForm])
+            }, 2000)
+        })
+    </script>
+</body>
 </html>
