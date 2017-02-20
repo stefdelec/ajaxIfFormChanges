@@ -75,13 +75,14 @@ Forms are submitted on a click event only if their states actually changed.
             let arrOfAjax = $(this).data("arrAjax").map(function (obj) {
                 //console.log(obj.ajax);
 
-                if ($("#" + obj.id).formChanges("check") && $("#" + obj.id).valid()) {
-
+                if ($("#" + obj.id).formChanges("check")) {
+                    $("#" + obj.id).formChanges("listen");
                     return obj.ajax();
                 }
 
             });
             $.when(...arrOfAjax).then(callbackSuccess, callbackFailures)
+            
         }
         //On click
 
