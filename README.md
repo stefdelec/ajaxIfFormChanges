@@ -6,7 +6,7 @@ It doesn't listen to "input" or "change" event but compare 2 states of form. So 
 ###Example
 
 ```
-$("HTML Element to attach 'click event' ").multiAjaxFormIfItHasChanged(
+$("HTMLElement to attach 'click event'").multiAjaxFormIfItHasChanged(
       [{
         id:"id of the form", 
         ajax:function(){my ajax request}
