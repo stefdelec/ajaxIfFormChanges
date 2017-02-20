@@ -52,42 +52,47 @@ Forms are submitted on a click event only if their states actually changed.
 */
    
 
-$.fn.multiAjaxFormIfItHasChanged = function (arrayToBeProcess, callbackSuccess, callbackFailures) {
+    $.fn.multiAjaxFormIfItHasChanged = function (arrayToBeProcess, callbackSuccess, callbackFailures) {
 
-        //arrayToBeProcess =[{ id:"",ajax:$.ajax()},{...}]
+        //arrayToBeProcess ={ id:"",ajax:$.ajax()}
         //init if it is first time
-       
 
 
 
-        $.fn.addNew = function(obj){
+
+        $.fn._addNew = function (obj) {
             $(this).data("arrAjax").push(obj);
             $("#" + obj.id).formChanges("listen")
         }
 
         //Save forms
-        $.fn.listenToArray = function() {
-            for(let item of arrayToBeProcess) $(this).addNew(item);
+        $.fn._listenToArray = function () {
+            for(let item of arrayToBeProcess) $(this)._addNew(item);
         }
 
-        //On click
-        $(this).on("click", function () {
-           
+
+        $.fn._triggerAjaxRequest = function () {
             let arrOfAjax = $(this).data("arrAjax").map(function (obj) {
                 //console.log(obj.ajax);
-                if ($("#" + obj.id).formChanges("check")) {                    
+
+                if ($("#" + obj.id).formChanges("check") && $("#" + obj.id).valid()) {
+
                     return obj.ajax();
                 }
-                else return obj.ajax()
+
             });
-   
             $.when(...arrOfAjax).then(callbackSuccess, callbackFailures)
-        })
+        }
+        //On click
+
 
         if ($(this).data("arrAjax") == undefined) {
+            $(this).on("click", $(this)._triggerAjaxRequest);
             $(this).data("arrAjax", []);
-            $(this).listenToArray(arrayToBeProcess);
+            $(this)._listenToArray(arrayToBeProcess);
         }
-
+        else {
+            $(this)._listenToArray(arrayToBeProcess)
+        }
         return this;
     }
