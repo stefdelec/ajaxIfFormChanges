@@ -1,6 +1,9 @@
 # ajaxIfFormChanges
+Is a jquery plugin to handle multi-ajax request for forms ONLY if they have changed. It optimizes the number of request.
 
-#Example
+It doesn't listen to "input" or "change" event but compare 2 states of form. So if an input had "Myvalue" as a value, then user change it to "not my value" and change it back to "Myvalue", no ajax request will be processed.
+
+###Example
 
 ```
 $("HTML Element to attach 'click event' ").multiAjaxFormIfItHasChanged(
