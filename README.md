@@ -31,7 +31,7 @@ The object must have 2 properties:
 ```
 {
   id:"id of the form", 
-  ajax:function(){my ajax request}
+  ajax:function(){return myajaxrequest}
 }
 ```
 ###Add new form after initialisation :
